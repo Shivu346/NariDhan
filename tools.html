@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Tools - NARIDHAN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747673026/naridhan_logo_gnwg3y.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelector" class="form-select form-select-sm">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="bn">বাংলা</option>
+            <option value="te">తెలుగు</option>
+            <option value="ta">தமிழ்</option>
+        </select>
+    </div>
+
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747673026/naridhan_logo_gnwg3y.png" alt="NARIDHAN Logo" height="50" class="d-inline-block align-text-top me-2">
+                <span class="brand-text" data-i18n="brand.name">NARIDHAN</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="tools.html" data-i18n="nav.tools">Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="calculator.html" data-i18n="nav.calculator">Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="savings-calculator.html">Savings Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="budget-allocation.html">Budget</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="education.html" data-i18n="nav.education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chatbot.html" data-i18n="nav.chatbot">Chatbot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html" data-i18n="nav.about">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747684141/user_female_tjhqsp.png" alt="User" class="user-avatar" style="width: 40px; height: 40px;">
+                            <span id="userName">User</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profile.html" data-i18n="nav.profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html" data-i18n="nav.settings">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn" data-i18n="nav.logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header bg-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-4 fw-bold text-primary">Financial Tools</h1>
+                    <p class="lead">Empowering rural women with the right financial tools for a secure future</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Tools Section -->
+    <section class="investment-tools-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title">OUR Investment Tools</h2>
+                    <p class="section-subtitle">Discover the right investment options tailored for rural women</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Savings Account -->
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="tool-card h-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <h3>Savings Accounts</h3>
+                        <p>Start your financial journey with the right savings account that fits your needs.</p>
+                        
+                        <div class="accordion" id="savingsAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Traditional Savings Account
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#savingsAccordion">
+                                    <div class="accordion-body">
+                                        <p>A basic savings account with minimal balance requirements, ideal for beginners.</p>
+                                        <ul>
+                                            <li>Low minimum balance (₹500-1000)</li>
+                                            <li>Interest rates: 2.5% - 3.5% p.a.</li>
+                                            <li>Basic ATM/Debit card</li>
+                                            <li>Mobile banking access</li>
+                                        </ul>
+                                        <p>Perfect for: Daily transactions and building initial savings habits</p>
+                                        <a href="#" class="btn btn-sm btn-outline-primary mt-2">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        High-Yield Savings Account
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#savingsAccordion">
+                                    <div class="accordion-body">
+                                        <p>Higher interest rates for those who can maintain larger balances.</p>
+                                        <ul>
+                                            <li>Higher minimum balance (₹5,000-10,000)</li>
+                                            <li>Interest rates: 5% - 7% p.a.</li>
+                                            <li>Premium banking services</li>
+                                            <li>Free fund transfers</li>
+                                        </ul>
+                                        <p>Perfect for: Growing your savings with better returns</p>
+                                        <a href="#" class="btn btn-sm btn-outline-primary mt-2">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="btn btn-primary mt-3">Compare Savings Accounts</a>
+                    </div>
+                </div>
+                
+                <!-- Government Schemes -->
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="tool-card h-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3>Government Schemes</h3>
+                        <p>Access special government schemes designed to support rural women's financial growth.</p>
+                        
+                        <div class="scheme-categories mb-3">
+                            <div class="d-flex flex-wrap">
+                                <button class="btn btn-sm btn-outline-primary m-1 scheme-filter active" data-filter="all">All Schemes</button>
+                                <button class="btn btn-sm btn-outline-primary m-1 scheme-filter" data-filter="central">Central Govt</button>
+                                <button class="btn btn-sm btn-outline-primary m-1 scheme-filter" data-filter="state">State Govt</button>
+                            </div>
+                        </div>
+                        
+                        <div class="scheme-list">
+                            <div class="scheme-item" data-category="central">
+                                <h5>Pradhan Mantri Jan Dhan Yojana</h5>
+                                <p>Financial inclusion program providing access to banking services</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Details</a>
+                            </div>
+                            <div class="scheme-item" data-category="central">
+                                <h5>Sukanya Samriddhi Yojana</h5>
+                                <p>Savings scheme for girl child with high interest rates</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Details</a>
+                            </div>
+                            <div class="scheme-item" data-category="central">
+                                <h5>Pradhan Mantri Mudra Yojana</h5>
+                                <p>Loans for small businesses and entrepreneurs</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Details</a>
+                            </div>
+                            <div class="scheme-item" data-category="state">
+                                <h5>Tejaswini Yojana (MP)</h5>
+                                <p>Empowerment program for adolescent girls and young women</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Details</a>
+                            </div>
+                            <div class="scheme-item" data-category="state">
+                                <h5>Sashakt Mahila Yojana (MP)</h5>
+                                <p>Financial assistance for women's self-help groups</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Details</a>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="btn btn-primary mt-3">View All Schemes</a>
+                    </div>
+                </div>
+                
+                <!-- Emergency Funds -->
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="tool-card h-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-life-ring"></i>
+                        </div>
+                        <h3>Emergency Funds</h3>
+                        <p>Quick access to funds during emergencies without high interest rates.</p>
+                        
+                        <div class="emergency-fund-info">
+                            <div class="info-box bg-light p-3 rounded mb-3">
+                                <h5>Emergency Loan Features</h5>
+                                <ul>
+                                    <li>Loan amount up to ₹25,000</li>
+                                    <li>Minimal documentation</li>
+                                    <li>Quick approval process</li>
+                                    <li>Low interest rates</li>
+                                    <li>Flexible repayment options</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="emergency-calculator mb-3">
+                                <h5>Emergency Fund Calculator</h5>
+                                <div class="form-group mb-2">
+                                    <label for="monthlyExpense">Monthly Expenses (₹)</label>
+                                    <input type="number" class="form-control" id="monthlyExpense" placeholder="Enter amount">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="monthsNeeded">Months of Coverage</label>
+                                    <select class="form-select" id="monthsNeeded">
+                                        <option value="3">3 months</option>
+                                        <option value="6">6 months</option>
+                                        <option value="9">9 months</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-sm btn-outline-primary" id="calculateEmergencyFund">Calculate</button>
+                                <div class="result-box mt-2 p-2 border rounded d-none" id="emergencyFundResult">
+                                    <p class="mb-0">Recommended Emergency Fund: <span class="fw-bold">₹0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="btn btn-primary mt-3">Apply for Emergency Fund</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Planning Tools -->
+    <section class="financial-planning-section py-5 bg-light">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title">Financial Planning Tools</h2>
+                    <p class="section-subtitle">Plan your financial future with our interactive tools</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="planning-tool-card h-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3>Budget Planner</h3>
+                        <p>Create personalized budgets to manage your monthly expenses and income.</p>
+                        <a href="calculator.html" class="btn btn-outline-primary">Use Tool</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="planning-tool-card h-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Savings Goal Calculator</h3>
+                        <p>Set financial goals and calculate how long it will take to achieve them.</p>
+                        <a href="#" class="btn btn-outline-primary">Use Tool</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="planning-tool-card h-100">
+                        <div class="tool-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>Loan Eligibility Calculator</h3>
+                        <p>Check your eligibility for various loans based on your income and profile.</p>
+                        <a href="#" class="btn btn-outline-primary">Use Tool</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Education Resources -->
+    <section class="education-resources-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title">Financial Education Resources</h2>
+                    <p class="section-subtitle">Learn and grow your financial knowledge</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4" data-aos="fade-right">
+                    <div class="resource-card d-flex h-100">
+                        <div class="resource-icon me-3">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>Video Tutorials</h4>
+                            <p>Watch easy-to-understand videos on various financial topics in your language.</p>
+                            <a href="education.html" class="btn btn-sm btn-outline-primary">Watch Videos</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4" data-aos="fade-left">
+                    <div class="resource-card d-flex h-100">
+                        <div class="resource-icon me-3">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>Downloadable Guides</h4>
+                            <p>Download simple guides on savings, investments, and financial planning.</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Download Guides</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4" data-aos="fade-right" data-aos-delay="100">
+                    <div class="resource-card d-flex h-100">
+                        <div class="resource-icon me-3">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>Online Workshops</h4>
+                            <p>Join our free online workshops conducted by financial experts.</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Register for Workshops</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4" data-aos="fade-left" data-aos-delay="100">
+                    <div class="resource-card d-flex h-100">
+                        <div class="resource-icon me-3">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="resource-content">
+                            <h4>AI Financial Assistant</h4>
+                            <p>Get instant answers to your financial questions from our AI assistant.</p>
+                            <a href="chatbot.html" class="btn btn-sm btn-outline-primary">Chat with Assistant</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">
+                    <h2 class="text-white">Ready to Take Control of Your Financial Future?</h2>
+                    <p class="text-white mb-4">Join thousands of women who are already benefiting from our platform</p>
+                    <a href="login.html" class="btn btn-light btn-lg">Get Started Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <h3>About Us</h3>
+                    <p>We are dedicated to empowering rural women through financial literacy and accessible tools.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://X.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="tools.html">Tools</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="education.html">Financial Education</a></li>
+                        <li><a href="chatbot.html">AI Chatbot</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Latest Updates</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">New Government Scheme for Rural Women</a></li>
+                        <li><a href="#">Financial Literacy Workshop in Jabalpur</a></li>
+                        <li><a href="#">Partnership with Leading Banks</a></li>
+                        <li><a href="#">Mobile App Coming Soon</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> <span>NARIDHAN Office, Jabalpur, Madhya Pradesh, India</span></li>
+                        <li><i class="fas fa-phone"></i> <span>+91 7017636243</span></li>
+                        <li><i class="fas fa-envelope"></i> <span>support@naridhan.org</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="copyright">© 2025 NARIDHAN. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- i18next for multilingual support -->
+    <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.10/i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/jquery-i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+        
+        // Scheme filter functionality
+        $(document).ready(function() {
+            $('.scheme-filter').click(function() {
+                const filter = $(this).data('filter');
+                
+                // Update active button
+                $('.scheme-filter').removeClass('active');
+                $(this).addClass('active');
+                
+                // Filter items
+                if (filter === 'all') {
+                    $('.scheme-item').show();
+                } else {
+                    $('.scheme-item').hide();
+                    $(`.scheme-item[data-category="${filter}"]`).show();
+                }
+            });
+            
+            // Emergency Fund Calculator
+            $('#calculateEmergencyFund').click(function() {
+                const monthlyExpense = parseFloat($('#monthlyExpense').val()) || 0;
+                const months = parseInt($('#monthsNeeded').val()) || 3;
+                
+                if (monthlyExpense > 0) {
+                    const recommendedFund = monthlyExpense * months;
+                    $('#emergencyFundResult').removeClass('d-none');
+                    $('#emergencyFundResult span').text(`₹${recommendedFund.toLocaleString()}`);
+                } else {
+                    alert('Please enter a valid monthly expense amount');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

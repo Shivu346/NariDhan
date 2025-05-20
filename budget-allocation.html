@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Allocation - NARIDHAN</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <style>
+        /* Additional styles for budget dashboard */
+        .dashboard-card {
+            border-radius: var(--border-radius);
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            height: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .transaction-icon.expense {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .transaction-icon.income {
+            background-color: #d1fae5;
+            color: #059669;
+        }
+        
+        .transaction-icon.utility {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+        
+        .budget-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #e9ecef;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .budget-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .budget-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .savings-progress {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .savings-progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+        
+        .badge-custom {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .badge-primary {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelector" class="form-select form-select-sm">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="bn">বাংলা</option>
+            <option value="te">తెలుగు</option>
+            <option value="ta">தமிழ்</option>
+        </select>
+    </div>
+
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747673026/naridhan_logo_gnwg3y.png" alt="NARIDHAN Logo" height="40" class="d-inline-block align-text-top me-2">
+                <span class="brand-text" data-i18n="brand.name">NARIDHAN</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tools.html" data-i18n="nav.tools">Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="calculator.html" data-i18n="nav.calculator">Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="savings-calculator.html">Savings Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="budget-allocation.html">Budget</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="education.html" data-i18n="nav.education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chatbot.html" data-i18n="nav.chatbot">Chatbot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html" data-i18n="nav.about">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747684141/user_female_tjhqsp.png" alt="User" class="user-avatar"style="width: 40px; height: 40px;">
+                            <span id="userName">User</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profile.html" data-i18n="nav.profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html" data-i18n="nav.settings">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn" data-i18n="nav.logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header bg-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-4 fw-bold text-primary">Budget Dashboard</h1>
+                    <p class="lead">Manage your monthly budget and track your spending</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="py-5">
+        <div class="container">
+            <!-- Dashboard Grid -->
+            <div class="row">
+                <!-- Monthly Overview Card -->
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="h5 fw-bold">Monthly Overview</h2>
+                            <span class="badge-custom badge-primary">Current Month</span>
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>Income</span>
+                                <span class="fw-medium">₹25,000</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>Expenses</span>
+                                <span class="fw-medium">₹18,500</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 74%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>Savings</span>
+                                <span class="fw-medium">₹6,500</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 26%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budget Allocation Card -->
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="dashboard-card p-4">
+                        <h2 class="h5 fw-bold mb-4">Budget Allocation</h2>
+                        <div style="height: 200px;">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                        <div class="mt-4 row">
+                            <div class="col-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <span class="d-inline-block rounded-circle me-2" style="width: 12px; height: 12px; background-color: #013a5b;"></span>
+                                    <span class="small text-muted">Housing (35%)</span>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <span class="d-inline-block rounded-circle me-2" style="width: 12px; height: 12px; background-color: #f59e0b;"></span>
+                                    <span class="small text-muted">Food (25%)</span>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <span class="d-inline-block rounded-circle me-2" style="width: 12px; height: 12px; background-color: #10b981;"></span>
+                                    <span class="small text-muted">Education (20%)</span>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <span class="d-inline-block rounded-circle me-2" style="width: 12px; height: 12px; background-color: #8b5cf6;"></span>
+                                    <span class="small text-muted">Savings (20%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spending Trends Card -->
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="dashboard-card p-4">
+                        <h2 class="h5 fw-bold mb-4">Spending Trends</h2>
+                        <div style="height: 200px;">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budget Adjustments Card -->
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="dashboard-card p-4">
+                        <h2 class="h5 fw-bold mb-4">Adjust Budget</h2>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>Housing</span>
+                                <span class="fw-medium" id="housingValue">₹7,000</span>
+                            </div>
+                            <input type="range" min="0" max="10000" value="7000" class="budget-slider" id="housingSlider">
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>Food</span>
+                                <span class="fw-medium" id="foodValue">₹5,000</span>
+                            </div>
+                            <input type="range" min="0" max="8000" value="5000" class="budget-slider" id="foodSlider">
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>Education</span>
+                                <span class="fw-medium" id="educationValue">₹4,000</span>
+                            </div>
+                            <input type="range" min="0" max="6000" value="4000" class="budget-slider" id="educationSlider">
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>Savings</span>
+                                <span class="fw-medium" id="savingsValue">₹5,000</span>
+                            </div>
+                            <input type="range" min="0" max="10000" value="5000" class="budget-slider" id="savingsSlider">
+                        </div>
+                        <button class="btn btn-primary w-100">Update Budget</button>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions Card -->
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="dashboard-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="h5 fw-bold">Recent Transactions</h2>
+                            <a href="#" class="small text-primary">View All</a>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="transaction-icon expense">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 fw-medium">Groceries</p>
+                                        <p class="small text-muted mb-0">Supermarket</p>
+                                    </div>
+                                </div>
+                                <span class="text-danger fw-medium">-₹1,250</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="transaction-icon income">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 fw-medium">Salary</p>
+                                        <p class="small text-muted mb-0">Monthly Income</p>
+                                    </div>
+                                </div>
+                                <span class="text-success fw-medium">+₹25,000</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="transaction-icon utility">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 fw-medium">Electricity</p>
+                                        <p class="small text-muted mb-0">Utility Bill</p>
+                                    </div>
+                                </div>
+                                <span class="text-danger fw-medium">-₹1,800</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Savings Goal Card -->
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="dashboard-card p-4">
+                        <h2 class="h5 fw-bold mb-4">Savings Goal</h2>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small text-muted">₹5,000 saved</span>
+                            <span class="small text-muted">₹10,000 goal</span>
+                        </div>
+                        <div class="savings-progress mb-3">
+                            <div class="savings-progress-fill" style="width: 50%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-4">
+                            <span>Start: 1 Jan</span>
+                            <span>Target: 1 Jul</span>
+                        </div>
+                        <button class="btn btn-outline-primary w-100">Adjust Goal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <h3>About Us</h3>
+                    <p>We are dedicated to empowering rural women through financial literacy and accessible tools.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="tools.html">Tools</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="budget-allocation.html">Budget Allocation</a></li>
+                        <li><a href="education.html">Financial Education</a></li>
+                        <li><a href="chatbot.html">AI Chatbot</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Latest Updates</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">New Government Scheme for Women Entrepreneurs</a></li>
+                        <li><a href="#">Financial Literacy Workshop in Jabalpur</a></li>
+                        <li><a href="#">Partnership with Leading Banks</a></li>
+                        <li><a href="#">Mobile App Coming Soon</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> <span>NARIDHAN Office, Jabalpur, Madhya Pradesh, India</span></li>
+                        <li><i class="fas fa-phone"></i> <span>+91 7017636243</span></li>
+                        <li><i class="fas fa-envelope"></i> <span>support@naridhan.org</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="copyright">© 2025 NARIDHAN. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- i18next for multilingual support -->
+    <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.10/i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/jquery-i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+        
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pie Chart for Budget Allocation
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            const pieChart = new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Housing', 'Food', 'Education', 'Savings'],
+                    datasets: [{
+                        data: [35, 25, 20, 20],
+                        backgroundColor: [
+                            '#013a5b',  // Primary color
+                            '#f59e0b',  // Yellow
+                            '#10b981',  // Green
+                            '#8b5cf6'   // Purple
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+            
+            // Line Chart for Spending Trends
+            const lineCtx = document.getElementById('lineChart').getContext('2d');
+            const lineChart = new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Expenses',
+                        data: [15000, 16200, 17500, 16800, 18000, 18500],
+                        borderColor: '#013a5b',
+                        backgroundColor: 'rgba(1, 58, 91, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Budget Sliders
+            const housingSlider = document.getElementById('housingSlider');
+            const foodSlider = document.getElementById('foodSlider');
+            const educationSlider = document.getElementById('educationSlider');
+            const savingsSlider = document.getElementById('savingsSlider');
+            
+            const housingValue = document.getElementById('housingValue');
+            const foodValue = document.getElementById('foodValue');
+            const educationValue = document.getElementById('educationValue');
+            const savingsValue = document.getElementById('savingsValue');
+            
+            housingSlider.addEventListener('input', function() {
+                housingValue.textContent = '₹' + parseInt(this.value).toLocaleString();
+                updatePieChart();
+            });
+            
+            foodSlider.addEventListener('input', function() {
+                foodValue.textContent = '₹' + parseInt(this.value).toLocaleString();
+                updatePieChart();
+            });
+            
+            educationSlider.addEventListener('input', function() {
+                educationValue.textContent = '₹' + parseInt(this.value).toLocaleString();
+                updatePieChart();
+            });
+            
+            savingsSlider.addEventListener('input', function() {
+                savingsValue.textContent = '₹' + parseInt(this.value).toLocaleString();
+                updatePieChart();
+            });
+            
+            function updatePieChart() {
+                const housingAmount = parseInt(housingSlider.value);
+                const foodAmount = parseInt(foodSlider.value);
+                const educationAmount = parseInt(educationSlider.value);
+                const savingsAmount = parseInt(savingsSlider.value);
+                
+                const total = housingAmount + foodAmount + educationAmount + savingsAmount;
+                
+                if (total > 0) {
+                    const housingPercentage = Math.round((housingAmount / total) * 100);
+                    const foodPercentage = Math.round((foodAmount / total) * 100);
+                    const educationPercentage = Math.round((educationAmount / total) * 100);
+                    const savingsPercentage = Math.round((savingsAmount / total) * 100);
+                    
+                    pieChart.data.datasets[0].data = [housingPercentage, foodPercentage, educationPercentage, savingsPercentage];
+                    pieChart.update();
+                }
+            }
+        });
+    </script>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Savings Calculator Script -->
+    <script>
+        function calculateSavings() {
+            const monthlySaving = parseFloat(document.getElementById('monthlySaving').value);
+            const years = parseInt(document.getElementById('years').value);
+
+            if (isNaN(monthlySaving) || isNaN(years) || years <= 0 || monthlySaving <= 0) {
+                alert("Please enter valid positive values.");
+                return;
+            }
+
+            const totalSavings = monthlySaving * years * 12;
+            document.getElementById('totalSavings').innerText = `₹${totalSavings.toLocaleString()}`;
+            document.getElementById('savingsResult').classList.remove('d-none');
+            document.getElementById('timeResult').classList.add('d-none');
+            document.getElementById('result').classList.remove('d-none');
+        }
+
+        function calculateTimeToTarget() {
+            const monthlySaving = parseFloat(document.getElementById('monthlySaving').value);
+            const targetSaving = parseFloat(document.getElementById('targetSaving').value);
+
+            if (isNaN(monthlySaving) || monthlySaving <= 0) {
+                alert("Please enter a valid monthly saving amount.");
+                return;
+            }
+
+            if (isNaN(targetSaving) || targetSaving <= 0) {
+                alert("Please enter a valid target amount (greater than 0).");
+                return;
+            }
+
+            const months = Math.ceil(targetSaving / monthlySaving);
+            const years = Math.floor(months / 12);
+            const remainingMonths = months % 12;
+            
+            let timeText = '';
+            if (years > 0) {
+                timeText += `${years} year${years > 1 ? 's' : ''}`;
+                if (remainingMonths > 0) {
+                    timeText += ` and ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
+                }
+            } else {
+                timeText = `${months} month${months > 1 ? 's' : ''}`;
+            }
+            
+            document.getElementById('requiredMonths').innerText = timeText;
+            document.getElementById('savingsResult').classList.add('d-none');
+            document.getElementById('timeResult').classList.remove('d-none');
+            document.getElementById('result').classList.remove('d-none');
+        }
+        
+        // Initialize GSAP animations for the savings calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                const savingsElements = document.querySelectorAll('.savings-calculator-section [data-aos]');
+                savingsElements.forEach((el) => {
+                    gsap.from(el, {
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.6
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

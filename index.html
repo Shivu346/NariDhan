@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NARIDHAN - Rural Women Empowerment Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747673026/naridhan_logo_gnwg3y.png" type="image/x-icon">
+    <style>
+        /* Additional styles for enhanced interactivity */
+        .benefit-card {
+            transition: all 0.3s ease;
+            border-radius: var(--border-radius);
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .benefit-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .benefit-card:hover:before {
+            opacity: 1;
+        }
+        
+        .benefit-card:hover h3,
+        .benefit-card:hover p {
+            color: white;
+        }
+        
+        .benefit-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover .benefit-icon {
+            color: white;
+        }
+        
+        .testimonial-slider .swiper-slide {
+            padding: 20px;
+        }
+        
+        .counter-box {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .counter-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .counter-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .counter-text {
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+        
+        .partner-logo:hover {
+            filter: grayscale(10%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelector" class="form-select form-select-sm">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="bn">বাংলা</option>
+            <option value="te">తెలుగు</option>
+            <option value="ta">தமிழ்</option>
+        </select>
+    </div>
+
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747673026/naridhan_logo_gnwg3y.png" alt="NARIDHAN Logo" height="40" class="d-inline-block align-text-top me-2">
+                <span class="brand-text" data-i18n="brand.name">NARIDHAN</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html" data-i18n="nav.home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tools.html" data-i18n="nav.tools">Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="calculator.html" data-i18n="nav.calculator">Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="savings-calculator.html">Savings Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="budget-allocation.html">Budget</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="education.html" data-i18n="nav.education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chatbot.html" data-i18n="nav.chatbot">Chatbot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html" data-i18n="nav.about">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747684141/user_female_tjhqsp.png" alt="User" class="user-avatar" style="width: 40px; height: 40px;">
+                            <span id="userName">User</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profile.html" data-i18n="nav.profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html" data-i18n="nav.settings">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="login.html" id="logoutBtn" data-i18n="nav.logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div id="heroParticles" class="hero-particles"></div>
+        <div class="container">
+            <div class="row align-items-center hero-content">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="hero-title" data-i18n="hero.title">Financial Empowerment for Rural Women</h1>
+                    <p class="hero-subtitle" data-i18n="hero.subtitle">Access tools, education, and support to take control of your financial future</p>
+                    <div class="hero-buttons">
+                        <a href="login.html" class="btn btn-primary btn-lg me-3" data-i18n="hero.getStarted">Get Started</a>
+                        <a href="#benefits" class="btn btn-outline-secondary btn-lg" data-i18n="hero.learnMore">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747674827/women_empowerment_g9ukda.avif" alt="Rural Women Empowerment" class="img-fluid hero-image floating-element">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title">How We Empower You</h2>
+                    <p class="section-subtitle">Comprehensive solutions designed for rural women's financial growth</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <a href="#">
+                        <h3>Women Empowerment</h3>
+                        <p>We provide the knowledge and tools that enable rural women to make informed financial decisions and achieve economic independence.</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <a href="tools.html">
+                        <h3>Powerful Financial Tools</h3>
+                        <p>Access easy-to-use tools for expense tracking, budgeting, and financial planning tailored for rural women's needs.</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <a href="education.html">
+                        <h3>Personalized Financial Education</h3>
+                        <p>Learn essential financial skills through customized educational content in your preferred language.</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <a href="budget-allocation.html">
+                        <h3>AI-Powered Budgeting</h3>
+                        <p>Utilize our intelligent expense tracker and budgeting tools that learn from your habits and provide personalized recommendations.</p>
+                        </a>
+                    </div>
+                </div>
+                <!-- Add High-Yield Savings Account Card -->
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="550">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <a href="high_yield_savings.html">
+                        <h3>High-Yield Savings</h3>
+                        <p>Earn more on your savings with our special high-yield savings accounts offering up to 4.5% APY.</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <a href="chatbot.html">
+                        <h3>One-on-One Mentorship</h3>
+                        <p>Connect with experienced mentors who provide personalized guidance on your financial journey.</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section py-5 bg-light">
+        <div class="container">
+            <div class="row mb-5">
+                <a href="education.html">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title">Our Features</h2>
+                    <p class="section-subtitle">Tools and resources designed for your financial success</p>
+                </div>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <a href="calculator.html">
+                        <h3 data-i18n="features.calculator.title">Expense Calculator</h3>
+                        <p data-i18n="features.calculator.desc">Track your daily expenses and understand your spending patterns</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <a href="budget-allocation.html">
+                        <h3 data-i18n="features.budget.title">Budget Planner</h3>
+                        <p data-i18n="features.budget.desc">Create personalized budgets to manage your finances effectively</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <a href="education.html">
+                        <h3 data-i18n="features.education.title">Financial Education</h3>
+                        <p data-i18n="features.education.desc">Learn essential financial skills through videos and resources</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <a href="chatbot.html">
+                        <h3 data-i18n="features.chatbot.title">AI Assistant</h3>
+                        <p data-i18n="features.chatbot.desc">Get instant answers to your financial questions</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <a href="high_yield_savings.html">
+                        <h3 data-i18n="features.banking.title">Personal Banking</h3>
+                        <p data-i18n="features.banking.desc">Access banking services and loan information tailored for you</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <a href="#">
+                        <h3 data-i18n="features.language.title">Multiple Languages</h3>
+                        <p data-i18n="features.language.desc">Use the platform in your preferred language</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title" data-i18n="howItWorks.title">How It Works</h2>
+                    <p class="section-subtitle">Simple steps to financial empowerment</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3 data-i18n="howItWorks.step1.title">Create an Account</h3>
+                        <p data-i18n="howItWorks.step1.desc">Sign up using your email or social media accounts</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3 data-i18n="howItWorks.step2.title">Complete Your Profile</h3>
+                        <p data-i18n="howItWorks.step2.desc">Fill in your details to personalize your experience</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3 data-i18n="howItWorks.step3.title">Access All Features</h3>
+                        <p data-i18n="howItWorks.step3.desc">Start using tools, learning resources, and get support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section py-5 bg-light">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title" data-i18n="testimonials.title">Success Stories</h2>
+                    <p class="section-subtitle">Hear from women who have transformed their financial lives</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="swiper testimonial-slider">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-image">
+                                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747674803/farmer_lady_qhnf2i.webp" alt="Testimonial 1">
+                                    </div>
+                                    <div class="testimonial-content">
+                                        <p data-i18n="testimonials.1.content">"This platform helped me understand how to manage my small business finances. Now I can track expenses and plan better for my family and future."</p>
+                                        <h4 data-i18n="testimonials.1.name">Lakshmi, Farmer</h4>
+                                        <p data-i18n="testimonials.1.location">Bihar</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-image">
+                                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747674809/lady_artisan_seg9uc.jpg" alt="Testimonial 2">
+                                    </div>
+                                    <div class="testimonial-content">
+                                        <p data-i18n="testimonials.2.content">"The financial education videos taught me how to save and invest. I've started a savings account for my children's education."</p>
+                                        <h4 data-i18n="testimonials.2.name">Sunita, Artisan</h4>
+                                        <p data-i18n="testimonials.2.location">Rajasthan</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-image">
+                                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747675112/Tailor_fatima_sk4hsg.jpg" alt="Testimonial 3">
+                                    </div>
+                                    <div class="testimonial-content">
+                                        <p data-i18n="testimonials.3.content">"The AI chatbot answered all my questions about loans. I was able to apply for a small business loan and expand my tailoring shop."</p>
+                                        <h4 data-i18n="testimonials.3.name">Fatima, Tailor</h4>
+                                        <p data-i18n="testimonials.3.location">Kerala</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-image">
+                                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747676916/lady_enterpreneur_upw7sx.jpg" alt="Testimonial 4">
+                                    </div>
+                                    <div class="testimonial-content">
+                                        <p>"The one-on-one mentorship program gave me the confidence to start my own small business.My mentor guided me in every step of the process."</p>
+                                        <h4>Meena, Entrepreneur</h4>
+                                        <p>Madhya Pradesh</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title">Our Collaborations</h2>
+                    <p class="section-subtitle">Working with leading entrepreneurs and organizations</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-md-3 mb-4 text-center" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="partner-logo p-3 bg-light rounded">
+                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747680225/enterpreneur_3_dw4k4b.jpg" alt="Partner 1" class="img-fluid" style="width:100% ; height:200px; background-size: cover;">
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-4 text-center" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="partner-logo p-3 bg-light rounded">
+                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747677324/falguninayar_wuz9lk.jpg" alt="Partner 2" class="img-fluid" style="width:100% ; height:200px; background-size: cover;">
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-4 text-center" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="partner-logo p-3 bg-light rounded">
+                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747680237/enterpreneur_paisx9.jpg" alt="Partner 3" class="img-fluid" style="width:100% ; height:200px; background-size: cover;">
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-4 text-center" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="partner-logo p-3 bg-light rounded">
+                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747680226/enterpreneur_2_qkvgoo.jpg" alt="Partner 4" class="img-fluid" style="width:100% ; height:200px; background-size: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Counter Section -->
+    <section class="counter-section py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="counter-box">
+                        <div class="counter-number" data-count="5000">0</div>
+                        <div class="counter-text">Women Empowered</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="counter-box">
+                        <div class="counter-number" data-count="50">0</div>
+                        <div class="counter-text">Villages Reached</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="counter-box">
+                        <div class="counter-number" data-count="25">0</div>
+                        <div class="counter-text">Lakh Rupees Saved</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="counter-box">
+                        <div class="counter-number" data-count="20">0</div>
+                        <div class="counter-text">Entrepreneur Partners</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center" data-aos="zoom-in">
+                    <h2 data-i18n="cta.title">Ready to Take Control of Your Financial Future?</h2>
+                    <p data-i18n="cta.subtitle">Join thousands of women who are already benefiting from our platform</p>
+                    <a href="login.html" class="btn btn-light btn-lg" data-i18n="cta.button">Get Started Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <h3>About Us</h3>
+                    <p>We are dedicated to empowering rural women through financial literacy and accessible tools.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://X.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="tools.html">Tools</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="education.html">Financial Education</a></li>
+                        <li><a href="chatbot.html">AI Chatbot</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Latest Updates</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">New Government Scheme for Rural Women</a></li>
+                        <li><a href="#">Financial Literacy Workshop in Jabalpur</a></li>
+                        <li><a href="#">Partnership with Leading Banks</a></li>
+                        <li><a href="#">Mobile App Coming Soon</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> <span>NARIDHAN Office, Jabalpur, Madhya Pradesh, India</span></li>
+                        <li><i class="fas fa-phone"></i> <span>+91 7017636243</span></li>
+                        <li><i class="fas fa-envelope"></i> <span>support@naridhan.org</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="copyright">© 2025 NARIDHAN. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Swiper Slider JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <!-- Particles JS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- i18next for multilingual support -->
+    <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.10/i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/jquery-i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+        
+        // Initialize Swiper slider
+        const testimonialSwiper = new Swiper('.testimonial-slider', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                992: {
+                    slidesPerView: 3,
+                }
+            }
+        });
+        
+        // Initialize Particles.js
+        particlesJS('heroParticles', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#013a5b'
+                },
+                shape: {
+                    type: 'circle',
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#013a5b',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+        
+        // Counter animation
+        function animateCounter() {
+            $('.counter-number').each(function() {
+                const $this = $(this);
+                const countTo = parseInt($this.attr('data-count'));
+                
+                $({ countNum: $this.text() }).animate({
+                    countNum: countTo
+                }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function() {
+                        $this.text(Math.floor(this.countNum));
+                    },
+                    complete: function() {
+                        $this.text(this.countNum);
+                    }
+                });
+            });
+        }
+        
+        // Trigger counter animation when section is in viewport
+        const counterSection = document.querySelector('.counter-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(counterSection);
+    </script>
+</body>
+</html>

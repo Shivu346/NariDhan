@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Education - Rural Women Empowerment Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747673026/naridhan_logo_gnwg3y.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelector" class="form-select form-select-sm">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="bn">বাংলা</option>
+            <option value="te">తెలుగు</option>
+            <option value="ta">தமிழ்</option>
+        </select>
+    </div>
+
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747673026/naridhan_logo_gnwg3y.png" alt="NARIDHAN Logo" height="40" class="d-inline-block align-text-top me-2">
+                <span class="brand-text" data-i18n="brand.name">NARIDHAN</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tools.html" data-i18n="nav.tools">Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="calculator.html" data-i18n="nav.calculator">Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="savings-calculator.html">Savings Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="budget-allocation.html">Budget</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="education.html" data-i18n="nav.education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chatbot.html" data-i18n="nav.chatbot">Chatbot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html" data-i18n="nav.about">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747684141/user_female_tjhqsp.png" alt="User" class="user-avatar" style="width: 40px; height: 40px;">
+                            <span id="userName">User</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profile.html" data-i18n="nav.profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="settings.html" data-i18n="nav.settings">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutBtn" data-i18n="nav.logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Education Section -->
+    <section class="education-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-4">
+                    <div class="section-header text-center">
+                        <h2 data-i18n="education.title">Financial Education</h2>
+                        <p data-i18n="education.subtitle">Learn essential financial skills to improve your financial well-being</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic Navigation -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="topic-navigation">
+                        <ul class="nav nav-pills justify-content-center" id="educationTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="basics-tab" data-bs-toggle="pill" data-bs-target="#basics" type="button" role="tab" aria-controls="basics" aria-selected="true" data-i18n="education.basics">Basics</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="savings-tab" data-bs-toggle="pill" data-bs-target="#savings" type="button" role="tab" aria-controls="savings" aria-selected="false" data-i18n="education.savings">Savings</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="banking-tab" data-bs-toggle="pill" data-bs-target="#banking" type="button" role="tab" aria-controls="banking" aria-selected="false" data-i18n="education.banking">Banking</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="loans-tab" data-bs-toggle="pill" data-bs-target="#loans" type="button" role="tab" aria-controls="loans" aria-selected="false" data-i18n="education.loans">Loans</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="business-tab" data-bs-toggle="pill" data-bs-target="#business" type="button" role="tab" aria-controls="business" aria-selected="false" data-i18n="education.business">Business</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="schemes-tab" data-bs-toggle="pill" data-bs-target="#schemes" type="button" role="tab" aria-controls="schemes" aria-selected="false" data-i18n="education.schemes">Govt. Schemes</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic Content -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="tab-content" id="educationTabContent">
+                        <!-- Basics Tab -->
+                        <div class="tab-pane fade show active" id="basics" role="tabpanel" aria-labelledby="basics-tab">
+                            <div class="row">
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.basics.title1">Introduction to Financial Literacy</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder1" title="Introduction to Financial Literacy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.basics.desc1">Learn the fundamentals of financial literacy and why it's important for your daily life.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 10:25</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.basics.title2">Understanding Income and Expenses</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder2" title="Understanding Income and Expenses" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.basics.desc2">Learn how to track your income and expenses to better manage your money.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 8:15</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.basics.title3">Creating a Simple Budget</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder3" title="Creating a Simple Budget" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.basics.desc3">Learn how to create a simple budget that works for your household.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 12:40</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.basics.title4">Financial Goals Setting</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder4" title="Financial Goals Setting" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.basics.desc4">Learn how to set achievable financial goals for yourself and your family.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 9:30</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Savings Tab -->
+                        <div class="tab-pane fade" id="savings" role="tabpanel" aria-labelledby="savings-tab">
+                            <div class="row">
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.savings.title1">Why Saving Money is Important</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder5" title="Why Saving Money is Important" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.savings.desc1">Understand the importance of saving money and how it can secure your future.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 7:45</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.savings.title2">Simple Saving Strategies</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder6" title="Simple Saving Strategies" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.savings.desc2">Learn practical strategies to save money even with a limited income.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 11:20</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- More savings videos would go here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Banking Tab -->
+                        <div class="tab-pane fade" id="banking" role="tabpanel" aria-labelledby="banking-tab">
+                            <div class="row">
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.banking.title1">Opening a Bank Account</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder7" title="Opening a Bank Account" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.banking.desc1">Learn the process and benefits of opening a bank account.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 10:05</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.banking.title2">Using Mobile Banking Safely</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder8" title="Using Mobile Banking Safely" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.banking.desc2">Learn how to use mobile banking applications safely and securely.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 9:35</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- More banking videos would go here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Loans Tab -->
+                        <div class="tab-pane fade" id="loans" role="tabpanel" aria-labelledby="loans-tab">
+                            <div class="row">
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.loans.title1">Understanding Loans and Interest</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder9" title="Understanding Loans and Interest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.loans.desc1">Learn the basics of loans, interest rates, and how to borrow responsibly.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 13:15</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.loans.title2">Microfinance and Self-Help Groups</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder10" title="Microfinance and Self-Help Groups" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.loans.desc2">Learn about microfinance institutions and how self-help groups can help you access loans.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 14:50</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- More loan videos would go here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Business Tab -->
+                        <div class="tab-pane fade" id="business" role="tabpanel" aria-labelledby="business-tab">
+                            <div class="row">
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.business.title1">Starting a Small Business</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder11" title="Starting a Small Business" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.business.desc1">Learn the basics of starting a small business with minimal investment.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 15:30</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.business.title2">Managing Business Finances</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder12" title="Managing Business Finances" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.business.desc2">Learn how to manage your business finances effectively and keep proper records.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 12:25</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- More business videos would go here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Government Schemes Tab -->
+                        <div class="tab-pane fade" id="schemes" role="tabpanel" aria-labelledby="schemes-tab">
+                            <div class="row">
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.schemes.title1">Pradhan Mantri Jan Dhan Yojana</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder13" title="Pradhan Mantri Jan Dhan Yojana" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.schemes.desc1">Learn about the Pradhan Mantri Jan Dhan Yojana and how it can help you access banking services.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 8:55</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="education-card">
+                                        <h3 data-i18n="education.schemes.title2">Mudra Loan Scheme</h3>
+                                        <div class="video-container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/placeholder14" title="Mudra Loan Scheme" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-description">
+                                            <p data-i18n="education.schemes.desc2">Learn about the Mudra Loan Scheme and how it can help you start or expand your business.</p>
+                                            <div class="video-meta">
+                                                <span><i class="fas fa-clock"></i> 10:40</span>
+                                                <span><i class="fas fa-closed-captioning"></i> <span data-i18n="education.subtitles">Subtitles available</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- More government scheme videos would go here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Downloadable Resources -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="resources-section">
+                        <h3 class="text-center mb-4" data-i18n="education.resources.title">Downloadable Resources</h3>
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="resource-card">
+                                    <div class="resource-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="resource-content">
+                                        <h4 data-i18n="education.resources.title1">Basic Financial Guide</h4>
+                                        <p data-i18n="education.resources.desc1">A comprehensive guide to understanding basic financial concepts.</p>
+                                        <a href="#" class="btn btn-outline-primary" data-i18n="education.download">Download PDF</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="resource-card">
+                                    <div class="resource-icon">
+                                        <i class="fas fa-file-excel"></i>
+                                    </div>
+                                    <div class="resource-content">
+                                        <h4 data-i18n="education.resources.title2">Budget Template</h4>
+                                        <p data-i18n="education.resources.desc2">A simple budget template to help you track your income and expenses.</p>
+                                        <a href="#" class="btn btn-outline-primary" data-i18n="education.download">Download Excel</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="resource-card">
+                                    <div class="resource-icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <div class="resource-content">
+                                        <h4 data-i18n="education.resources.title3">Government Schemes List</h4>
+                                        <p data-i18n="education.resources.desc3">A list of government schemes available for rural women.</p>
+                                        <a href="#" class="btn btn-outline-primary" data-i18n="education.download">Download PDF</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <h3>About Us</h3>
+                    <p>We are dedicated to empowering rural women through financial literacy and accessible tools.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://X.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="tools.html">Tools</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="education.html">Financial Education</a></li>
+                        <li><a href="chatbot.html">AI Chatbot</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Latest Updates</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">New Government Scheme for Rural Women</a></li>
+                        <li><a href="#">Financial Literacy Workshop in Jabalpur</a></li>
+                        <li><a href="#">Partnership with Leading Banks</a></li>
+                        <li><a href="#">Mobile App Coming Soon</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> <span>NARIDHAN Office, Jabalpur, Madhya Pradesh, India</span></li>
+                        <li><i class="fas fa-phone"></i> <span>+91 7017636243</span></li>
+                        <li><i class="fas fa-envelope"></i> <span>support@naridhan.org</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="copyright">© 2025 NARIDHAN. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- i18next for multilingual support -->
+    <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.10/i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/jquery-i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/education.js"></script>
+</body>
+</html>

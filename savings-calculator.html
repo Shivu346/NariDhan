@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Savings Calculator - NARIDHAN</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+  <!-- GSAP for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <style>
+      /* Additional styles for savings calculator page */
+      .calculator-card {
+          border-radius: var(--border-radius);
+          background-color: white;
+          box-shadow: var(--box-shadow);
+          transition: var(--transition);
+          height: 100%;
+      }
+      
+      .calculator-card:hover {
+          transform: translateY(-5px);
+      }
+      
+      .input-group-text {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+      }
+      
+      .form-control:focus {
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 0.25rem rgba(1, 58, 91, 0.25);
+      }
+      
+      .result-card {
+          border-radius: var(--border-radius);
+          background-color: var(--light-color);
+          border-left: 4px solid var(--primary-color);
+          padding: 20px;
+          margin-top: 20px;
+          transition: all 0.3s ease;
+      }
+      
+      .result-card.success {
+          border-left-color: #10b981;
+      }
+      
+      .result-card.warning {
+          border-left-color: #f59e0b;
+      }
+      
+      .result-value {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: var(--primary-color);
+          margin-bottom: 5px;
+      }
+      
+      .result-label {
+          color: var(--gray-color);
+          font-size: 0.9rem;
+      }
+      
+      .savings-progress {
+          height: 10px;
+          background-color: #e9ecef;
+          border-radius: 5px;
+          overflow: hidden;
+          margin: 10px 0;
+      }
+      
+      .savings-progress-fill {
+          height: 100%;
+          background-color: var(--primary-color);
+          border-radius: 5px;
+          transition: width 1s ease-in-out;
+      }
+      
+      .calculator-tabs .nav-link {
+          color: var(--text-color);
+          border: none;
+          padding: 10px 20px;
+          border-radius: 0;
+          border-bottom: 2px solid transparent;
+      }
+      
+      .calculator-tabs .nav-link.active {
+          color: var(--primary-color);
+          background-color: transparent;
+          border-bottom: 2px solid var(--primary-color);
+          font-weight: 600;
+      }
+      
+      .info-icon {
+          color: var(--primary-color);
+          cursor: pointer;
+          margin-left: 5px;
+      }
+      
+      .tip-card {
+          background-color: #f8f9fa;
+          border-radius: var(--border-radius);
+          padding: 15px;
+          margin-bottom: 20px;
+          border-left: 3px solid var(--primary-color);
+      }
+      
+      .tip-card h5 {
+          color: var(--primary-color);
+          font-size: 1rem;
+          margin-bottom: 10px;
+      }
+      
+      .tip-card p {
+          font-size: 0.9rem;
+          margin-bottom: 0;
+      }
+      
+      .chart-container {
+          height: 300px;
+          margin-top: 20px;
+      }
+      
+      .feature-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background-color: var(--light-color);
+          color: var(--primary-color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          margin-bottom: 15px;
+      }
+      
+      .feature-card {
+          padding: 20px;
+          border-radius: var(--border-radius);
+          background-color: white;
+          box-shadow: var(--box-shadow);
+          height: 100%;
+          transition: var(--transition);
+      }
+      
+      .feature-card:hover {
+          transform: translateY(-5px);
+      }
+      
+      /* Animation classes */
+      .fade-in {
+          opacity: 0;
+          transition: opacity 0.5s ease-in-out;
+      }
+      
+      .fade-in.show {
+          opacity: 1;
+      }
+      
+      .slide-in {
+          transform: translateY(20px);
+          opacity: 0;
+          transition: all 0.5s ease-in-out;
+      }
+      
+      .slide-in.show {
+          transform: translateY(0);
+          opacity: 1;
+      }
+  </style>
+</head>
+<body>
+  <!-- Language Selector -->
+  <div class="language-selector">
+      <select id="languageSelector" class="form-select form-select-sm">
+          <option value="en">English</option>
+          <option value="hi">हिंदी</option>
+          <option value="bn">বাংলা</option>
+          <option value="te">తెలుగు</option>
+          <option value="ta">தமிழ்</option>
+      </select>
+  </div>
+
+  <!-- Header/Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <div class="container">
+          <a class="navbar-brand" href="index.html">
+              <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747673026/naridhan_logo_gnwg3y.png" alt="NARIDHAN Logo" height="40" class="d-inline-block align-text-top me-2">
+              <span class="brand-text" data-i18n="brand.name">NARIDHAN</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tools.html" data-i18n="nav.tools">Tools</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="calculator.html" data-i18n="nav.calculator">Calculator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="savings-calculator.html">Savings Calculator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="budget-allocation.html">Budget</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="education.html" data-i18n="nav.education">Education</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="chatbot.html" data-i18n="nav.chatbot">Chatbot</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html" data-i18n="nav.about">About Us</a>
+                </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747684141/user_female_tjhqsp.png" alt="User" class="user-avatar" style="width: 40px; height: 40px;">
+                        <span id="userName">User</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="profile.html" data-i18n="nav.profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="settings.html" data-i18n="nav.settings">Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn" data-i18n="nav.logout">Logout</a></li>
+                    </ul>
+                </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header bg-light py-5">
+      <div class="container">
+          <div class="row">
+              <div class="col-12 text-center">
+                  <h1 class="display-4 fw-bold text-primary">Savings Calculator</h1>
+                  <p class="lead">Plan your financial future with our interactive savings tools</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="py-5">
+      <div class="container">
+          <!-- Calculator Tabs -->
+          <div class="row mb-4">
+              <div class="col-lg-10 mx-auto">
+                  <ul class="nav nav-tabs calculator-tabs justify-content-center" id="calculatorTabs" role="tablist">
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="regular-savings-tab" data-bs-toggle="tab" data-bs-target="#regular-savings" type="button" role="tab" aria-controls="regular-savings" aria-selected="true">
+                              <i class="fas fa-piggy-bank me-2"></i>Regular Savings
+                          </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="goal-calculator-tab" data-bs-toggle="tab" data-bs-target="#goal-calculator" type="button" role="tab" aria-controls="goal-calculator" aria-selected="false">
+                              <i class="fas fa-bullseye me-2"></i>Goal Calculator
+                          </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="compound-interest-tab" data-bs-toggle="tab" data-bs-target="#compound-interest" type="button" role="tab" aria-controls="compound-interest" aria-selected="false">
+                              <i class="fas fa-chart-line me-2"></i>Compound Interest
+                          </button>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+          <!-- Calculator Content -->
+          <div class="row">
+              <div class="col-lg-10 mx-auto">
+                  <div class="tab-content" id="calculatorTabsContent">
+                      <!-- Regular Savings Calculator -->
+                      <div class="tab-pane fade show active" id="regular-savings" role="tabpanel" aria-labelledby="regular-savings-tab">
+                          <div class="row">
+                              <div class="col-md-6 mb-4" data-aos="fade-right">
+                                  <div class="calculator-card p-4">
+                                      <h2 class="h4 fw-bold mb-4">Regular Savings Calculator</h2>
+                                      <p class="text-muted mb-4">Calculate how much you can save with regular monthly deposits.</p>
+                                      
+                                      <form id="regularSavingsForm">
+                                          <div class="mb-3">
+                                              <label for="monthlySaving" class="form-label">Monthly Saving Amount (₹)</label>
+                                              <div class="input-group">
+                                                  <span class="input-group-text">₹</span>
+                                                  <input type="number" class="form-control" id="monthlySaving" placeholder="Enter amount" required min="1">
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="savingPeriod" class="form-label">Saving Period</label>
+                                              <div class="row">
+                                                  <div class="col-6">
+                                                      <input type="number" class="form-control" id="savingYears" placeholder="Years" min="0" required>
+                                                  </div>
+                                                  <div class="col-6">
+                                                      <input type="number" class="form-control" id="savingMonths" placeholder="Months" min="0" max="11">
+                                                  </div>
+                                              </div>
+                                              <small class="text-muted">Enter at least one period value</small>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="interestRate" class="form-label">Annual Interest Rate (%)</label>
+                                              <div class="input-group">
+                                                  <input type="number" class="form-control" id="interestRate" placeholder="Enter rate" value="4.5" step="0.1" min="0" max="20">
+                                                  <span class="input-group-text">%</span>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="d-grid gap-2">
+                                              <button type="button" class="btn btn-primary" id="calculateRegularSavings">Calculate</button>
+                                              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                              
+                              <div class="col-md-6 mb-4" data-aos="fade-left">
+                                  <div class="calculator-card p-4">
+                                      <h2 class="h4 fw-bold mb-4">Your Results</h2>
+                                      
+                                      <div id="regularSavingsResults" class="d-none">
+                                          <div class="result-card">
+                                              <div class="row">
+                                                  <div class="col-md-6 mb-3 mb-md-0">
+                                                      <div class="result-label">Total Contributions</div>
+                                                      <div class="result-value" id="totalContributions">₹0</div>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <div class="result-label">Total Interest Earned</div>
+                                                      <div class="result-value" id="totalInterest">₹0</div>
+                                                  </div>
+                                              </div>
+                                              
+                                              <div class="mt-4">
+                                                  <div class="d-flex justify-content-between align-items-center">
+                                                      <div class="result-label">Final Balance</div>
+                                                      <div class="result-value" id="finalBalance">₹0</div>
+                                                  </div>
+                                                  
+                                                  <div class="savings-progress">
+                                                      <div class="savings-progress-fill" style="width: 0%"></div>
+                                                  </div>
+                                                  
+                                                  <div class="d-flex justify-content-between small text-muted">
+                                                      <span>Your Contributions</span>
+                                                      <span>Interest Earned</span>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="chart-container mt-4">
+                                              <canvas id="savingsGrowthChart"></canvas>
+                                          </div>
+                                      </div>
+                                      
+                                      <div id="regularSavingsPlaceholder" class="text-center py-5">
+                                          <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747686833/thumb_720_450_1411_f_ooygii.jpg" alt="Calculator" class="img-fluid mb-3" style="max-height: 400px;">
+                                          <p class="text-muted">Fill in the form and click Calculate to see your results</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <!-- Savings Tips -->
+                          <div class="row mt-4" data-aos="fade-up">
+                              <div class="col-12">
+                                  <div class="tip-card">
+                                      <h5><i class="fas fa-lightbulb me-2"></i>Savings Tip</h5>
+                                      <p>Start small but be consistent. Even saving ₹500 per month can grow to over ₹70,000 in 10 years with a 4.5% interest rate.</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <!-- Goal Calculator -->
+                      <div class="tab-pane fade" id="goal-calculator" role="tabpanel" aria-labelledby="goal-calculator-tab">
+                          <div class="row">
+                              <div class="col-md-6 mb-4" data-aos="fade-right">
+                                  <div class="calculator-card p-4">
+                                      <h2 class="h4 fw-bold mb-4">Savings Goal Calculator</h2>
+                                      <p class="text-muted mb-4">Calculate how much you need to save monthly to reach your financial goal.</p>
+                                      
+                                      <form id="goalCalculatorForm">
+                                          <div class="mb-3">
+                                              <label for="goalAmount" class="form-label">Target Amount (₹)</label>
+                                              <div class="input-group">
+                                                  <span class="input-group-text">₹</span>
+                                                  <input type="number" class="form-control" id="goalAmount" placeholder="Enter goal amount" required min="1000">
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="goalPeriod" class="form-label">Time to Reach Goal</label>
+                                              <div class="row">
+                                                  <div class="col-6">
+                                                      <input type="number" class="form-control" id="goalYears" placeholder="Years" min="0" required>
+                                                  </div>
+                                                  <div class="col-6">
+                                                      <input type="number" class="form-control" id="goalMonths" placeholder="Months" min="0" max="11">
+                                                  </div>
+                                              </div>
+                                              <small class="text-muted">Enter at least one period value</small>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="goalInterestRate" class="form-label">Annual Interest Rate (%)</label>
+                                              <div class="input-group">
+                                                  <input type="number" class="form-control" id="goalInterestRate" placeholder="Enter rate" value="4.5" step="0.1" min="0" max="20">
+                                                  <span class="input-group-text">%</span>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="initialDeposit" class="form-label">Initial Deposit (Optional)</label>
+                                              <div class="input-group">
+                                                  <span class="input-group-text">₹</span>
+                                                  <input type="number" class="form-control" id="initialDeposit" placeholder="Enter initial amount" min="0">
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="d-grid gap-2">
+                                              <button type="button" class="btn btn-primary" id="calculateGoal">Calculate</button>
+                                              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                              
+                              <div class="col-md-6 mb-4" data-aos="fade-left">
+                                  <div class="calculator-card p-4">
+                                      <h2 class="h4 fw-bold mb-4">Goal Results</h2>
+                                      
+                                      <div id="goalResults" class="d-none">
+                                          <div class="result-card">
+                                              <div class="text-center mb-4">
+                                                  <div class="result-label">Required Monthly Saving</div>
+                                                  <div class="result-value" id="requiredMonthlySaving">₹0</div>
+                                              </div>
+                                              
+                                              <div class="row">
+                                                  <div class="col-md-6 mb-3 mb-md-0">
+                                                      <div class="result-label">Total Contributions</div>
+                                                      <div class="result-value" id="goalTotalContributions">₹0</div>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <div class="result-label">Total Interest Earned</div>
+                                                      <div class="result-value" id="goalTotalInterest">₹0</div>
+                                                  </div>
+                                              </div>
+                                              
+                                              <div class="mt-4">
+                                                  <div class="d-flex justify-content-between align-items-center">
+                                                      <div class="result-label">Goal Progress</div>
+                                                      <div class="small text-muted" id="goalPercentage">0%</div>
+                                                  </div>
+                                                  
+                                                  <div class="savings-progress">
+                                                      <div class="savings-progress-fill" style="width: 0%"></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="chart-container mt-4">
+                                              <canvas id="goalProgressChart"></canvas>
+                                          </div>
+                                      </div>
+                                      
+                                      <div id="goalPlaceholder" class="text-center py-5">
+                                          <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747686833/thumb_720_450_1411_f_ooygii.jpg" alt="Goal" class="img-fluid mb-3" style="max-height: 400px;">
+                                          <p class="text-muted">Fill in the form and click Calculate to see your results</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <!-- Goal Tips -->
+                          <div class="row mt-4" data-aos="fade-up">
+                              <div class="col-12">
+                                  <div class="tip-card">
+                                      <h5><i class="fas fa-lightbulb me-2"></i>Goal Setting Tip</h5>
+                                      <p>Break down large financial goals into smaller milestones. This makes them more manageable and gives you a sense of achievement along the way.</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <!-- Compound Interest Calculator -->
+                      <div class="tab-pane fade" id="compound-interest" role="tabpanel" aria-labelledby="compound-interest-tab">
+                          <div class="row">
+                              <div class="col-md-6 mb-4" data-aos="fade-right">
+                                  <div class="calculator-card p-4">
+                                      <h2 class="h4 fw-bold mb-4">Compound Interest Calculator</h2>
+                                      <p class="text-muted mb-4">See how your money can grow with the power of compound interest.</p>
+                                      
+                                      <form id="compoundInterestForm">
+                                          <div class="mb-3">
+                                              <label for="principalAmount" class="form-label">Principal Amount (₹)</label>
+                                              <div class="input-group">
+                                                  <span class="input-group-text">₹</span>
+                                                  <input type="number" class="form-control" id="principalAmount" placeholder="Enter principal amount" required min="100">
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="compoundInterestRate" class="form-label">Annual Interest Rate (%)</label>
+                                              <div class="input-group">
+                                                  <input type="number" class="form-control" id="compoundInterestRate" placeholder="Enter rate" value="4.5" step="0.1" min="0" max="20">
+                                                  <span class="input-group-text">%</span>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="compoundingFrequency" class="form-label">Compounding Frequency</label>
+                                              <select class="form-select" id="compoundingFrequency">
+                                                  <option value="1">Annually</option>
+                                                  <option value="2">Semi-Annually</option>
+                                                  <option value="4">Quarterly</option>
+                                                  <option value="12" selected>Monthly</option>
+                                                  <option value="365">Daily</option>
+                                              </select>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="compoundPeriod" class="form-label">Time Period</label>
+                                              <div class="row">
+                                                  <div class="col-6">
+                                                      <input type="number" class="form-control" id="compoundYears" placeholder="Years" min="1" required>
+                                                  </div>
+                                                  <div class="col-6">
+                                                      <input type="number" class="form-control" id="compoundMonths" placeholder="Months" min="0" max="11">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="mb-3">
+                                              <label for="additionalContribution" class="form-label">Additional Contribution (Optional)</label>
+                                              <div class="input-group">
+                                                  <span class="input-group-text">₹</span>
+                                                  <input type="number" class="form-control" id="additionalContribution" placeholder="Enter amount" min="0">
+                                              </div>
+                                              <select class="form-select mt-2" id="contributionFrequency">
+                                                  <option value="monthly">Monthly</option>
+                                                  <option value="quarterly">Quarterly</option>
+                                                  <option value="annually">Annually</option>
+                                              </select>
+                                          </div>
+                                          
+                                          <div class="d-grid gap-2">
+                                              <button type="button" class="btn btn-primary" id="calculateCompoundInterest">Calculate</button>
+                                              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                              
+                              <div class="col-md-6 mb-4" data-aos="fade-left">
+                                  <div class="calculator-card p-4">
+                                      <h2 class="h4 fw-bold mb-4">Compound Interest Results</h2>
+                                      
+                                      <div id="compoundResults" class="d-none">
+                                          <div class="result-card">
+                                              <div class="text-center mb-4">
+                                                  <div class="result-label">Future Value</div>
+                                                  <div class="result-value" id="futureValue">₹0</div>
+                                              </div>
+                                              
+                                              <div class="row">
+                                                  <div class="col-md-6 mb-3 mb-md-0">
+                                                      <div class="result-label">Total Principal</div>
+                                                      <div class="result-value" id="totalPrincipal">₹0</div>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <div class="result-label">Total Interest</div>
+                                                      <div class="result-value" id="compoundTotalInterest">₹0</div>
+                                                  </div>
+                                              </div>
+                                              
+                                              <div class="mt-4">
+                                                  <div class="d-flex justify-content-between align-items-center">
+                                                      <div class="result-label">Growth Breakdown</div>
+                                                  </div>
+                                                  
+                                                  <div class="savings-progress">
+                                                      <div class="savings-progress-fill" style="width: 0%"></div>
+                                                  </div>
+                                                  
+                                                  <div class="d-flex justify-content-between small text-muted">
+                                                      <span>Principal</span>
+                                                      <span>Interest</span>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          
+                                          <div class="chart-container mt-4">
+                                              <canvas id="compoundGrowthChart"></canvas>
+                                          </div>
+                                      </div>
+                                      
+                                      <div id="compoundPlaceholder" class="text-center py-5">
+                                          <img src="https://res.cloudinary.com/ddtqh4u2x/image/upload/v1747686833/thumb_720_450_1411_f_ooygii.jpg" alt="Compound Interest" class="img-fluid mb-3" style="max-height: 400px;">
+                                          <p class="text-muted">Fill in the form and click Calculate to see your results</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <!-- Compound Interest Tips -->
+                          <div class="row mt-4" data-aos="fade-up">
+                              <div class="col-12">
+                                  <div class="tip-card">
+                                      <h5><i class="fas fa-lightbulb me-2"></i>Compound Interest Tip</h5>
+                                      <p>The earlier you start saving, the more you benefit from compound interest. Time is your greatest ally in building wealth.</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+          <!-- Features Section -->
+          <div class="row mt-5">
+              <div class="col-12 text-center mb-4" data-aos="fade-up">
+                  <h2 class="h3 fw-bold">Why Use Our Savings Calculator?</h2>
+                  <p class="text-muted">Tools designed specifically for rural women's financial needs</p>
+              </div>
+              
+              <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                  <div class="feature-card text-center">
+                      <div class="feature-icon mx-auto">
+                          <i class="fas fa-calculator"></i>
+                      </div>
+                      <h3 class="h5 fw-bold">Simple & Easy to Use</h3>
+                      <p class="text-muted">Our calculators are designed to be straightforward and easy to understand, even for beginners.</p>
+                  </div>
+              </div>
+              
+              <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                  <div class="feature-card text-center">
+                      <div class="feature-icon mx-auto">
+                          <i class="fas fa-chart-pie"></i>
+                      </div>
+                      <h3 class="h5 fw-bold">Visual Results</h3>
+                      <p class="text-muted">See your savings growth with clear charts and visual representations that make planning easier.</p>
+                  </div>
+              </div>
+              
+              <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                  <div class="feature-card text-center">
+                      <div class="feature-icon mx-auto">
+                          <i class="fas fa-lightbulb"></i>
+                      </div>
+                      <h3 class="h5 fw-bold">Practical Tips</h3>
+                      <p class="text-muted">Get helpful savings tips and strategies tailored to rural women's financial situations.</p>
+                  </div>
+              </div>
+          </div>
+          
+          <!-- Call to Action -->
+          <div class="row mt-5">
+              <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                  <div class="calculator-card p-4 p-md-5">
+                      <h2 class="h3 fw-bold mb-3">Ready to Start Your Savings Journey?</h2>
+                      <p class="text-muted mb-4">Connect with a financial advisor for personalized guidance on your savings plan.</p>
+                      <a href="chatbot.html" class="btn btn-primary btn-lg">Chat with Our AI Assistant</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3 mb-4">
+                  <h3>About Us</h3>
+                  <p>We are dedicated to empowering rural women through financial literacy and accessible tools.</p>
+                  <div class="social-links">
+                      <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                      <a href="#"><i class="fab fa-youtube"></i></a>
+                  </div>
+              </div>
+              <div class="col-lg-3 mb-4">
+                  <h3>Quick Links</h3>
+                  <ul class="footer-links">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="tools.html">Tools</a></li>
+                      <li><a href="calculator.html">Calculator</a></li>
+                      <li><a href="budget-allocation.html">Budget Allocation</a></li>
+                      <li><a href="savings-calculator.html">Savings Calculator</a></li>
+                      <li><a href="high-yield-savings.html">High-Yield Savings</a></li>
+                      <li><a href="education.html">Financial Education</a></li>
+                      <li><a href="chatbot.html">AI Chatbot</a></li>
+                      <li><a href="about.html">About Us</a></li>
+                  </ul>
+              </div>
+              <div class="col-lg-3 mb-4">
+                  <h3>Latest Updates</h3>
+                  <ul class="footer-links">
+                      <li><a href="#">New Government Scheme for Rural Women</a></li>
+                      <li><a href="#">Financial Literacy Workshop in Jabalpur</a></li>
+                      <li><a href="#">Partnership with Leading Banks</a></li>
+                      <li><a href="#">Mobile App Coming Soon</a></li>
+                  </ul>
+              </div>
+              <div class="col-lg-3 mb-4">
+                  <h3>Contact Us</h3>
+                  <ul class="contact-info">
+                      <li><i class="fas fa-map-marker-alt"></i> <span>NARIDHAN Office, Jabalpur, Madhya Pradesh, India</span></li>
+                      <li><i class="fas fa-phone"></i> <span>+91 7017636243</span></li>
+                      <li><i class="fas fa-envelope"></i> <span>support@naridhan.org</span></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12 text-center">
+                  <p class="copyright">© 2025 NARIDHAN. All Rights Reserved.</p>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- AOS Animation Library -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- i18next for multilingual support -->
+  <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.10/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/jquery-i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+      // Initialize AOS animation
+      AOS.init({
+          duration: 800,
+          once: true
+      });
+      
+      // Initialize tooltips
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+      
+      // Create placeholder SVG images if they don't exist
+      document.addEventListener('DOMContentLoaded', function() {
+          // Check if calculator illustration exists
+          if (!document.querySelector('img[src="images/calculator-illustration.svg"]').complete) {
+              document.querySelectorAll('img[src="images/calculator-illustration.svg"]').forEach(img => {
+                  img.src = "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150' viewBox='0 0 200 150'%3e%3crect width='200' height='150' fill='%23f8f9fa'/%3e%3cpath d='M70,50 L130,50 L130,110 L70,110 Z' fill='%23013a5b' stroke='%23013a5b' stroke-width='2'/%3e%3ccircle cx='85' cy='65' r='8' fill='white'/%3e%3ccircle cx='115' cy='65' r='8' fill='white'/%3e%3ccircle cx='85' cy='95' r='8' fill='white'/%3e%3ccircle cx='115' cy='95' r='8' fill='white'/%3e%3c/svg%3e";
+              });
+          }
+          
+          // Check if goal illustration exists
+          if (!document.querySelector('img[src="images/goal-illustration.svg"]').complete) {
+              document.querySelectorAll('img[src="images/goal-illustration.svg"]').forEach(img => {
+                  img.src = "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150' viewBox='0 0 200 150'%3e%3crect width='200' height='150' fill='%23f8f9fa'/%3e%3ccircle cx='100' cy='75' r='50' fill='%23f8f9fa' stroke='%23013a5b' stroke-width='2'/%3e%3ccircle cx='100' cy='75' r='40' fill='%23f8f9fa' stroke='%23013a5b' stroke-width='2'/%3e%3ccircle cx='100' cy='75' r='30' fill='%23f8f9fa' stroke='%23013a5b' stroke-width='2'/%3e%3ccircle cx='100' cy='75' r='20' fill='%23f8f9fa' stroke='%23013a5b' stroke-width='2'/%3e%3ccircle cx='100' cy='75' r='10' fill='%23013a5b'/%3e%3c/svg%3e";
+              });
+          }
+          
+          // Check if compound illustration exists
+          if (!document.querySelector('img[src="images/compound-illustration.svg"]').complete) {
+              document.querySelectorAll('img[src="images/compound-illustration.svg"]').forEach(img => {
+                  img.src = "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150' viewBox='0 0 200 150'%3e%3crect width='200' height='150' fill='%23f8f9fa'/%3e%3cpath d='M40,110 L160,110 L160,115 L40,115 Z' fill='%23013a5b'/%3e%3cpath d='M50,110 L50,90 L70,90 L70,110 Z' fill='%23013a5b'/%3e%3cpath d='M80,110 L80,70 L100,70 L100,110 Z' fill='%23013a5b'/%3e%3cpath d='M110,110 L110,50 L130,50 L130,110 Z' fill='%23013a5b'/%3e%3cpath d='M140,110 L140,30 L160,30 L160,110 Z' fill='%23013a5b'/%3e%3c/svg%3e";
+              });
+          }
+      });
+
+      // Regular Savings Calculator
+      document.getElementById('calculateRegularSavings').addEventListener('click', function() {
+          const monthlySaving = parseFloat(document.getElementById('monthlySaving').value) || 0;
+          const years = parseInt(document.getElementById('savingYears').value) || 0;
+          const months = parseInt(document.getElementById('savingMonths').value) || 0;
+          const interestRate = parseFloat(document.getElementById('interestRate').value) || 0;
+          
+          // Validation
+          if (monthlySaving <= 0) {
+              alert('Please enter a valid monthly saving amount.');
+              return;
+          }
+          
+          if (years === 0 && months === 0) {
+              alert('Please enter a valid time period.');
+              return;
+          }
+          
+          // Calculate total months
+          const totalMonths = (years * 12) + months;
+          
+          // Calculate results
+          const monthlyInterestRate = interestRate / 100 / 12;
+          let totalContributions = monthlySaving * totalMonths;
+          let finalBalance = 0;
+          
+          // Calculate final balance with compound interest
+          if (monthlyInterestRate <= 0) {
+              finalBalance = totalContributions;
+          } else {
+              // Use a simpler formula that's less prone to errors
+              finalBalance = 0;
+              for (let i = 0; i < totalMonths; i++) {
+                  finalBalance = (finalBalance + monthlySaving) * (1 + monthlyInterestRate);
+              }
+          }
+          
+          const totalInterest = Math.max(0, finalBalance - totalContributions);
+          
+          // Format results with thousands separators
+          document.getElementById('totalContributions').textContent = '₹' + Math.round(totalContributions).toLocaleString();
+          document.getElementById('totalInterest').textContent = '₹' + Math.round(totalInterest).toLocaleString();
+          document.getElementById('finalBalance').textContent = '₹' + Math.round(finalBalance).toLocaleString();
+          
+          // Update progress bar
+          const contributionPercentage = finalBalance > 0 ? (totalContributions / finalBalance) * 100 : 0;
+          document.querySelector('#regular-savings .savings-progress-fill').style.width = Math.min(100, Math.max(0, contributionPercentage)) + '%';
+          
+          // Show results and hide placeholder
+          document.getElementById('regularSavingsResults').classList.remove('d-none');
+          document.getElementById('regularSavingsPlaceholder').classList.add('d-none');
+          
+          // Create chart data
+          const chartLabels = [];
+          const contributionsData = [];
+          const interestData = [];
+          const totalData = [];
+          
+          // Generate data points for every 6 months or every year depending on total duration
+          const interval = totalMonths <= 24 ? 3 : (totalMonths <= 60 ? 6 : 12);
+          
+          // Calculate values at different points in time
+          for (let i = interval; i <= totalMonths; i += interval) {
+              let runningContributions = monthlySaving * i;
+              let runningTotal = 0;
+              
+              if (monthlyInterestRate <= 0) {
+                  runningTotal = runningContributions;
+              } else {
+                  // Use the same simpler formula for consistency
+                  runningTotal = 0;
+                  for (let j = 0; j < i; j++) {
+                      runningTotal = (runningTotal + monthlySaving) * (1 + monthlyInterestRate);
+                  }
+              }
+              
+              let runningInterest = Math.max(0, runningTotal - runningContributions);
+              
+              // Format label based on interval
+              let label;
+              if (interval <= 3) {
+                  label = Math.floor(i / 3) + ' Q';
+              } else if (interval <= 6) {
+                  label = Math.floor(i / 6) + ' H';
+              } else {
+                  label = Math.floor(i / 12) + ' Y';
+              }
+              
+              chartLabels.push(label);
+              contributionsData.push(Math.round(runningContributions));
+              interestData.push(Math.round(runningInterest));
+              totalData.push(Math.round(runningTotal));
+          }
+          
+          // Add final point if not already included
+          if (totalMonths % interval !== 0) {
+              chartLabels.push(years + 'Y ' + months + 'M');
+              contributionsData.push(Math.round(totalContributions));
+              interestData.push(Math.round(totalInterest));
+              totalData.push(Math.round(finalBalance));
+          }
+          
+          // Create or update chart
+          const ctx = document.getElementById('savingsGrowthChart').getContext('2d');
+          
+          if (window.savingsChart) {
+              window.savingsChart.destroy();
+          }
+          
+          window.savingsChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: chartLabels,
+                  datasets: [
+                      {
+                          label: 'Total Balance',
+                          data: totalData,
+                          backgroundColor: 'rgba(1, 58, 91, 0.1)',
+                          borderColor: '#013a5b',
+                          borderWidth: 2,
+                          tension: 0.4,
+                          fill: true
+                      },
+                      {
+                          label: 'Contributions',
+                          data: contributionsData,
+                          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                          borderColor: '#10b981',
+                          borderWidth: 2,
+                          tension: 0.4,
+                          fill: true
+                      }
+                  ]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                      tooltip: {
+                          callbacks: {
+                              label: function(context) {
+                                  return context.dataset.label + ': ₹' + context.raw.toLocaleString();
+                              }
+                          }
+                      }
+                  },
+                  scales: {
+                      y: {
+                          beginAtZero: true,
+                          ticks: {
+                              callback: function(value) {
+                                  return '₹' + value.toLocaleString();
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+          
+          // Simple animation
+          gsap.fromTo('#regularSavingsResults .result-value', 
+              { opacity: 0, y: 10 },
+              { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }
+          );
+      });
+
+      // Goal Calculator
+      document.getElementById('calculateGoal').addEventListener('click', function() {
+          const goalAmount = parseFloat(document.getElementById('goalAmount').value) || 0;
+          const years = parseInt(document.getElementById('goalYears').value) || 0;
+          const months = parseInt(document.getElementById('goalMonths').value) || 0;
+          const interestRate = parseFloat(document.getElementById('goalInterestRate').value) || 0;
+          const initialDeposit = parseFloat(document.getElementById('initialDeposit').value) || 0;
+          
+          // Validation
+          if (goalAmount <= 0) {
+              alert('Please enter a valid goal amount.');
+              return;
+          }
+          
+          if (years === 0 && months === 0) {
+              alert('Please enter a valid time period.');
+              return;
+          }
+          
+          if (initialDeposit >= goalAmount) {
+              alert('Your initial deposit is already equal to or greater than your goal amount.');
+              return;
+          }
+          
+          // Calculate total months
+          const totalMonths = (years * 12) + months;
+          
+          // Calculate monthly saving required
+          const monthlyInterestRate = interestRate / 100 / 12;
+          let requiredMonthlySaving = 0;
+          
+          if (monthlyInterestRate <= 0) {
+              // Simple calculation without interest
+              requiredMonthlySaving = (goalAmount - initialDeposit) / totalMonths;
+          } else {
+              // Use a simpler approach - binary search to find the monthly saving amount
+              let low = 0;
+              let high = goalAmount; // Start with a high upper bound
+              let mid = 0;
+              let iterations = 0;
+              const maxIterations = 20; // Prevent infinite loops
+              
+              while (low <= high && iterations < maxIterations) {
+                  mid = (low + high) / 2;
+                  
+                  // Calculate future value with this monthly saving
+                  let futureValue = initialDeposit;
+                  for (let i = 0; i < totalMonths; i++) {
+                      futureValue = (futureValue + mid) * (1 + monthlyInterestRate);
+                  }
+                  
+                  if (Math.abs(futureValue - goalAmount) < 1) {
+                      // Close enough
+                      break;
+                  } else if (futureValue < goalAmount) {
+                      // Need to save more
+                      low = mid;
+                  } else {
+                      // Can save less
+                      high = mid;
+                  }
+                  
+                  iterations++;
+              }
+              
+              requiredMonthlySaving = mid;
+          }
+          
+          // Ensure monthly saving is positive
+          requiredMonthlySaving = Math.max(0, requiredMonthlySaving);
+          
+          // Calculate total contributions and interest
+          const totalContributions = initialDeposit + (requiredMonthlySaving * totalMonths);
+          const totalInterest = Math.max(0, goalAmount - totalContributions);
+          
+          // Format results with thousands separators
+          document.getElementById('requiredMonthlySaving').textContent = '₹' + Math.round(requiredMonthlySaving).toLocaleString();
+          document.getElementById('goalTotalContributions').textContent = '₹' + Math.round(totalContributions).toLocaleString();
+          document.getElementById('goalTotalInterest').textContent = '₹' + Math.round(totalInterest).toLocaleString();
+          
+          // Update progress percentage
+          const contributionPercentage = goalAmount > 0 ? (totalContributions / goalAmount) * 100 : 0;
+          document.getElementById('goalPercentage').textContent = Math.round(Math.min(100, Math.max(0, contributionPercentage))) + '%';
+          document.querySelector('#goalResults .savings-progress-fill').style.width = Math.min(100, Math.max(0, contributionPercentage)) + '%';
+          
+          // Show results and hide placeholder
+          document.getElementById('goalResults').classList.remove('d-none');
+          document.getElementById('goalPlaceholder').classList.add('d-none');
+          
+          // Create chart data
+          const chartLabels = [];
+          const savingsData = [];
+          const goalData = [];
+          
+          // Generate data points
+          const interval = totalMonths <= 24 ? 3 : (totalMonths <= 60 ? 6 : 12);
+          
+          for (let i = 0; i <= totalMonths; i += interval) {
+              // Calculate savings at this point
+              let savings = initialDeposit;
+              
+              if (i > 0) {
+                  if (monthlyInterestRate <= 0) {
+                      savings += requiredMonthlySaving * i;
+                  } else {
+                      // Use the same calculation method for consistency
+                      for (let j = 0; j < i; j++) {
+                          savings = (savings + requiredMonthlySaving) * (1 + monthlyInterestRate);
+                      }
+                  }
+              }
+              
+              // Format label
+              let label;
+              if (i === 0) {
+                  label = 'Start';
+              } else if (interval <= 3) {
+                  label = Math.floor(i / 3) + ' Q';
+              } else if (interval <= 6) {
+                  label = Math.floor(i / 6) + ' H';
+              } else {
+                  label = Math.floor(i / 12) + ' Y';
+              }
+              
+              chartLabels.push(label);
+              savingsData.push(Math.round(savings));
+              goalData.push(goalAmount);
+          }
+          
+          // Add final point if not already included
+          if (totalMonths % interval !== 0) {
+              chartLabels.push(years + 'Y ' + months + 'M');
+              savingsData.push(goalAmount);
+              goalData.push(goalAmount);
+          }
+          
+          // Create or update chart
+          const ctx = document.getElementById('goalProgressChart').getContext('2d');
+          
+          if (window.goalChart) {
+              window.goalChart.destroy();
+          }
+          
+          window.goalChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: chartLabels,
+                  datasets: [
+                      {
+                          label: 'Your Savings',
+                          data: savingsData,
+                          backgroundColor: 'rgba(1, 58, 91, 0.1)',
+                          borderColor: '#013a5b',
+                          borderWidth: 2,
+                          tension: 0.4,
+                          fill: true
+                      },
+                      {
+                          label: 'Goal Amount',
+                          data: goalData,
+                          borderColor: '#f59e0b',
+                          borderWidth: 2,
+                          borderDash: [5, 5],
+                          fill: false,
+                          pointRadius: 0
+                      }
+                  ]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                      tooltip: {
+                          callbacks: {
+                              label: function(context) {
+                                  return context.dataset.label + ': ₹' + context.raw.toLocaleString();
+                              }
+                          }
+                      }
+                  },
+                  scales: {
+                      y: {
+                          beginAtZero: true,
+                          ticks: {
+                              callback: function(value) {
+                                  return '₹' + value.toLocaleString();
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+          
+          // Simple animation
+          gsap.fromTo('#goalResults .result-value', 
+              { opacity: 0, y: 10 },
+              { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }
+          );
+      });
+
+      // Compound Interest Calculator
+      document.getElementById('calculateCompoundInterest').addEventListener('click', function() {
+          const principal = parseFloat(document.getElementById('principalAmount').value) || 0;
+          const interestRate = parseFloat(document.getElementById('compoundInterestRate').value) || 0;
+          const compoundingFrequency = parseInt(document.getElementById('compoundingFrequency').value) || 12;
+          const years = parseInt(document.getElementById('compoundYears').value) || 0;
+          const months = parseInt(document.getElementById('compoundMonths').value) || 0;
+          const additionalContribution = parseFloat(document.getElementById('additionalContribution').value) || 0;
+          const contributionFrequency = document.getElementById('contributionFrequency').value;
+          
+          // Validation
+          if (principal <= 0) {
+              alert('Please enter a valid principal amount.');
+              return;
+          }
+          
+          if (years === 0 && months === 0) {
+              alert('Please enter a valid time period.');
+              return;
+          }
+          
+          // Calculate total time in years
+          const totalYears = years + (months / 12);
+          
+          // Calculate periodic interest rate
+          const periodicRate = interestRate / 100 / compoundingFrequency;
+          
+          // Calculate number of compounding periods
+          const periods = compoundingFrequency * totalYears;
+          
+          // Determine contribution amount and frequency
+          let contributionsPerYear;
+          switch (contributionFrequency) {
+              case 'monthly':
+                  contributionsPerYear = 12;
+                  break;
+              case 'quarterly':
+                  contributionsPerYear = 4;
+                  break;
+              case 'annually':
+                  contributionsPerYear = 1;
+                  break;
+              default:
+                  contributionsPerYear = 12;
+          }
+          
+          // Calculate future value using a simpler, more reliable approach
+          let futureValue = principal;
+          let totalAdditionalContributions = 0;
+          
+          // Simulate each period
+          for (let i = 0; i < periods; i++) {
+              // Add interest for this period
+              if (periodicRate > 0) {
+                  futureValue *= (1 + periodicRate);
+              }
+              
+              // Add contribution if applicable for this period
+              // Check if this is a contribution period based on the frequency
+              if (additionalContribution > 0) {
+                  const periodsPerContribution = compoundingFrequency / contributionsPerYear;
+                  if (i % periodsPerContribution === 0) {
+                      futureValue += additionalContribution;
+                      totalAdditionalContributions += additionalContribution;
+                  }
+              }
+          }
+          
+          // Calculate total principal (initial + contributions)
+          const totalPrincipal = principal + totalAdditionalContributions;
+          
+          // Calculate total interest
+          const totalInterest = Math.max(0, futureValue - totalPrincipal);
+          
+          // Format results with thousands separators
+          document.getElementById('futureValue').textContent = '₹' + Math.round(futureValue).toLocaleString();
+          document.getElementById('totalPrincipal').textContent = '₹' + Math.round(totalPrincipal).toLocaleString();
+          document.getElementById('compoundTotalInterest').textContent = '₹' + Math.round(totalInterest).toLocaleString();
+          
+          // Update progress bar
+          const principalPercentage = futureValue > 0 ? (totalPrincipal / futureValue) * 100 : 0;
+          document.querySelector('#compoundResults .savings-progress-fill').style.width = Math.min(100, Math.max(0, principalPercentage)) + '%';
+          
+          // Show results and hide placeholder
+          document.getElementById('compoundResults').classList.remove('d-none');
+          document.getElementById('compoundPlaceholder').classList.add('d-none');
+          
+          // Create chart data for visualization
+          const chartLabels = [];
+          const principalData = [];
+          const interestData = [];
+          const totalData = [];
+          
+          // Generate data points
+          const yearInterval = totalYears <= 5 ? 0.5 : (totalYears <= 10 ? 1 : 2);
+          
+          // Calculate values at different points in time
+          for (let t = 0; t <= totalYears; t += yearInterval) {
+              // Calculate periods at this time
+              const periodsAtTime = compoundingFrequency * t;
+              
+              // Simulate growth up to this point
+              let valueAtTime = principal;
+              let contributionsAtTime = 0;
+              
+              for (let i = 0; i < periodsAtTime; i++) {
+                  // Add interest
+                  if (periodicRate > 0) {
+                      valueAtTime *= (1 + periodicRate);
+                  }
+                  
+                  // Add contribution if applicable
+                  if (additionalContribution > 0) {
+                      const periodsPerContribution = compoundingFrequency / contributionsPerYear;
+                      if (i % periodsPerContribution === 0) {
+                          valueAtTime += additionalContribution;
+                          contributionsAtTime += additionalContribution;
+                      }
+                  }
+              }
+              
+              // Calculate principal and interest at this time
+              const principalAtTime = principal + contributionsAtTime;
+              const interestAtTime = Math.max(0, valueAtTime - principalAtTime);
+              
+              // Format label
+              let label = t === 0 ? 'Start' : t + ' Y';
+              
+              chartLabels.push(label);
+              principalData.push(Math.round(principalAtTime));
+              interestData.push(Math.round(interestAtTime));
+              totalData.push(Math.round(valueAtTime));
+          }
+          
+          // Add final point if not already included
+          if (totalYears % yearInterval !== 0) {
+              chartLabels.push(totalYears + ' Y');
+              principalData.push(Math.round(totalPrincipal));
+              interestData.push(Math.round(totalInterest));
+              totalData.push(Math.round(futureValue));
+          }
+          
+          // Create or update chart
+          const ctx = document.getElementById('compoundGrowthChart').getContext('2d');
+          
+          if (window.compoundChart) {
+              window.compoundChart.destroy();
+          }
+          
+          window.compoundChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: chartLabels,
+                  datasets: [
+                      {
+                          label: 'Total Value',
+                          data: totalData,
+                          backgroundColor: 'rgba(1, 58, 91, 0.1)',
+                          borderColor: '#013a5b',
+                          borderWidth: 2,
+                          tension: 0.4,
+                          fill: true
+                      },
+                      {
+                          label: 'Principal',
+                          data: principalData,
+                          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                          borderColor: '#10b981',
+                          borderWidth: 2,
+                          tension: 0.4,
+                          fill: true
+                      }
+                  ]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                      tooltip: {
+                          callbacks: {
+                              label: function(context) {
+                                  return context.dataset.label + ': ₹' + context.raw.toLocaleString();
+                              }
+                          }
+                      }
+                  },
+                  scales: {
+                      y: {
+                          beginAtZero: true,
+                          ticks: {
+                              callback: function(value) {
+                                  return '₹' + value.toLocaleString();
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+          
+          // Simple animation
+          gsap.fromTo('#compoundResults .result-value', 
+              { opacity: 0, y: 10 },
+              { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }
+          );
+      });
+
+      // Add this helper function at the end of the script section
+      function isValidNumber(value) {
+          return typeof value === 'number' && !isNaN(value) && isFinite(value);
+      }
+  </script>
+</body>
+</html>
